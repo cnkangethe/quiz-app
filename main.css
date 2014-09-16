@@ -1,0 +1,20 @@
+body {
+		background-image:url("tennis.jpg");
+		background-repeat: no-repeat; 
+		background-size: 100%;
+		background-position: top center;
+		color:white;
+		
+	}
+.start,h1{
+		margin-left:60px;
+		width:540; height:100%;
+	 }
+
+
+
+
+
+
+
+
