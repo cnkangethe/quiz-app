@@ -1,8 +1,9 @@
 $(document).ready(function(){
+   
 	 $("button").on("click", askQuestion);
+   
   });
-
-
+    
   // global variables
   	var ind = 0;
     var question;
@@ -10,8 +11,8 @@ $(document).ready(function(){
     var options;
     var answerA,answerB,answerC,answerD;
     var correct = 0;
-    var quiz;
-    var current_status;
+    var quiz = $("#quiz");
+    var current_status = $("#current_status");
   	var questions = [
   	 [ "How many players enter a singles draw for a Grand Slam?",
   	  "64 players","128 players", "256 players","100 players" , "C"],
@@ -25,9 +26,15 @@ $(document).ready(function(){
   	  "Serena Williams","Lindsey Davenport", "Venus Williams","Jennifer Capriati" , "C"]
   	 ];
 
+
    // ask, evaluate and track questions and answers
   function askQuestion(){
+
      quiz = $("#quiz")[0];
+     
+     $("#count").text(" ");
+
+
      if(ind >= questions.length){
      	quiz.innerHTML = "<h2> You got " + correct +" of " + questions.length + " questions correct.</h2>";
      	$("#current_status")[0].innerHTML = "Quiz Completed";
@@ -36,7 +43,7 @@ $(document).ready(function(){
      	return false;
      }
       
-     $("#current_status")[0].innerHTML = "Question " + (ind+1) + " of " + questions.length;
+     $("#current_status")[0].innerHTML = "Select the Correct Answer<br><br>Question " + (ind+1) + " of " + questions.length;
      //populate the variables with questions and choices
      question = questions [ind] [0];
      answerA = questions[ind] [1];
@@ -49,10 +56,12 @@ $(document).ready(function(){
      $("#quiz").append("<input type='radio' name = 'options' value= 'B'>" + answerB+"<br>");
      $("#quiz").append("<input type='radio' name = 'options' value= 'C'>" + answerC+ "<br>");
      $("#quiz").append( "<input type='radio' name = 'options' value= 'D'>" + answerD+"<br>");
-     $("#quiz").append("<button onclick='checkAnswer()'> Submit Answer</button>");
+    //$("#quiz").append("<button onclick='checkAnswer()'> Submit Answer</button>");
+     $("input").on("click",checkAnswer);
   } 
  //checks the answer
   function checkAnswer(){
+
     options = document.getElementsByName("options"); // create an array of options
     for(var i=0; i<options.length; i++){
 
@@ -60,12 +69,21 @@ $(document).ready(function(){
         option = options[i].value; // store users selection 
       }
     }
+
+    quiz = $("#quiz")[0];
+    quiz.innterHTML = "";
   // evaluate if user selected the correct answer
     if(option == questions[ind] [5])
     { 
+    
   correct++;
-    }
-   ind++;
-   askQuestion();
+   $("#count").text("ACE (winning point)");
+    }else{$("#count").text("Love (No point)");}
+    
+      
+    ind++;
+
+    $("#quiz").append("<button onclick='askQuestion()'> Next Question</button>");
+
     }
 	
